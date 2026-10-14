@@ -152,7 +152,8 @@ describe("inspectTls: problems", () => {
 
   it("flags a weak RSA key", async () => {
     const leaf = makeIdentity({ cn: "public.test", issuer: root, keyBits: 1024 });
-    const server = await serve({ leaf });
+    // Newer OpenSSL (Node 24+) will not even load a 1024-bit key into a server at its default level.
+    const server = await serve({ leaf, ciphers: "DEFAULT:@SECLEVEL=0" });
     const result = await inspectTls(deps(), "public.test", server.port);
     expect(result.chain[0]!.keyBits).toBe(1024);
     expect(ids(result.findings, true)).toContain("tls.weak_key");
@@ -160,7 +161,7 @@ describe("inspectTls: problems", () => {
 
   it("reports several problems together, worst first", async () => {
     const leaf = makeIdentity({ cn: "other.test", startsInDays: -100, expiresInDays: -1, keyBits: 1024 });
-    const server = await serve({ leaf });
+    const server = await serve({ leaf, ciphers: "DEFAULT:@SECLEVEL=0" });
     const result = await inspectTls(deps(), "public.test", server.port);
     expect(ids(result.findings, true)).toEqual(expect.arrayContaining(["tls.expired", "tls.hostname_mismatch", "tls.weak_key"]));
   });
