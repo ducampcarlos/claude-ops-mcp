@@ -1,0 +1,60 @@
+{
+  "name": "claude-ops-mcp",
+  "version": "0.1.0",
+  "description": "A safe, read-only MCP server that gives Claude network and server diagnostics: TLS, HTTP, DNS, email authentication and sitemap audits.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "claude-code",
+    "devops",
+    "tls",
+    "dns",
+    "dmarc",
+    "spf",
+    "sitemap",
+    "seo",
+    "security",
+    "ssrf-safe"
+  ],
+  "homepage": "https://github.com/ducampcarlos/claude-ops-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/ducampcarlos/claude-ops-mcp/issues"
+  },
+  "type": "module",
+  "license": "MIT",
+  "author": "Carlos Ducamp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ducampcarlos/claude-ops-mcp.git"
+  },
+  "bin": {
+    "claude-ops-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "start": "node dist/index.js",
+    "dev": "node --import tsx src/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "undici": "^8.12.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.4"
+  }
+}
